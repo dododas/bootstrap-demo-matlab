@@ -37,7 +37,7 @@ Bexp = Breal + err; % This is simulated noisy data that we will fit
 
 ### Fit simulated data
 
-We then "fit" the noisy data to our model using nonlinear regression. In the following code block, we call the  Matlab function `nlinfit` with some reasonable initial guesses for the two model parameters:
+We then fit the noisy data to our model using nonlinear regression. In the following code block, we call the  Matlab function `nlinfit` with some reasonable initial guesses for the two model parameters:
 ```matlab
 % Perform nonlinear regression on simulated data
 options=statset('Display', 'iter');
