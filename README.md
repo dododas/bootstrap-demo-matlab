@@ -102,7 +102,7 @@ In practice, the bootstrap procedure is repeated many times - typically a few hu
 
 ```matlab
 % Now, apply bootstrap procedure many times to build up the bootstrap distributions 
-nboot= 1000 %Número de replicas para el Bootstrap
+nboot= 1000; %Número de replicas para el Bootstrap
 [~, bootIndices] = bootstrp(nboot, [], residuals);
 bootResiduals = residuals(bootIndices);
 Bbootstrap =repmat(Bmodel, 1, nboot) + bootResiduals;
@@ -121,6 +121,12 @@ The confidence intervals are estimated by:
 % Estimate bootstrap confidence intervals
 %Estimación del Intervalo de Confianza del 95%
 bootCI = prctile(betaBoot, [2.5 97.5]);
+
+% Output
+% bootCI =
+%
+%   56.1847    0.0070
+%   56.8111    0.0074
 ```
 
 ## Part 2: Bootstrap application to observed data
@@ -133,6 +139,11 @@ Bensayo=xlsread('PBM.xlsx','B2:B104');
 betaGuess = [max(Bensayo), 0.1]
 [betaHat, residuals, ~, ~, ~] = nlinfit(t, Bensayo, @Hidrolisis, betaGuess, options);
 betaHat
+%
+% Output
+% betaHat =
+%
+%   56.6050    0.0078
 ```
 
 Plot data and the fit:
@@ -160,13 +171,19 @@ end
 
 % Estimate 95% bootstrap confidence intervals
 bootCI = prctile(betaBoot, [2.5 97.5])
+
+% Output
+% bootCI =
+% 
+%   55.3984    0.0070
+%   58.5698    0.0090
 ```
 
 The following plots show the bootstrap distributions and the 95% confidence intervals for each parameter. 
 
 ![](plots/obs-bootstrap-distr.png)
 
-We can use the parameter confidence intervals to generate a prediction envelope for the model (shown below in dashed gray lines):
+Finally, we use the parameter confidence intervals to generate a prediction envelope for the model (shown below in dashed gray lines) with the following code block:
 
 ![](plots/bootstrap-prediction.png)
 
