@@ -89,7 +89,7 @@ betaBoot
 ```
 
 Notes on the code:
-- The function call `[~, bootIndices] = bootstrp(1, [], residuals);` returns a list of indices obtained by resampling with replacement the vector `1:length(residuals)`.  
+- The function call `[~, bootIndices] = bootstrp(1, [], residuals);` returns a list of indices obtained by resampling with replacement from the vector `1:length(residuals)`.  
 - To resample the residuals, we select the residuals at these indices using `bootResiduals = residuals(bootIndices);`. 
 - We then add the resampled residuals to the model prediction to generate the boostrap dataset.
 - Finally, we fit the bootstrap dataset using a call to `nlinfit()`. 
@@ -113,7 +113,7 @@ for i=1:nboot
 end
 ```
 
-This time, each column of `bootIndices` is an independent resampling of the vector `1:length(residuals)`. We then use these indices to resample the residuals. Each column of `bootResiduals` is one such bootstrap sample. As before, we add these residuals to the model prediction to generate bootstrap datasets. Thus, each column of `Bbootstrap` is a single bootstrap dataset. We fit each of these bootstrap datasets to our model and collect the parameter estimates in the matrix `betaBoot`. These estimates make up the bootstrap distributions of the two parameters plotted below. The vertical red lines show the 95% confidence interval for each parameter.
+This time, each column of `bootIndices` is an independent resampling with replacement from the vector `1:length(residuals)`. We then use these indices to resample the residuals. Therefore, each column of `bootResiduals` is a set of bootstrap residuals. As before, we add these residuals to the model prediction to generate bootstrap datasets. Thus, each column of `Bbootstrap` is a single bootstrap dataset. We fit these bootstrap datasets to our model and collect the parameter estimates in the matrix `betaBoot`. These estimates make up the bootstrap distributions of the two parameters plotted below. The vertical red lines show the 95% confidence interval for each parameter.
 
 ![](plots/sim-bootstrap-distr.png)
 
