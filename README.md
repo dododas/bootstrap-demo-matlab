@@ -185,6 +185,7 @@ The following plots show the bootstrap distributions and the 95% confidence inte
 
 Finally, we use the parameter confidence intervals to generate a prediction envelope for the model (shown below in dashed gray lines) with the following code block:
 ``` matlab
+% Plot data, model and bootstrap prediction intervals
 clf()
 plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot data
 hold on
