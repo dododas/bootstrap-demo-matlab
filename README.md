@@ -132,7 +132,7 @@ bootCI = prctile(betaBoot, [2.5 97.5]);
 
 ## Part 2: Bootstrap application to observed data
 
-Now, we will apply the bootstrap procedure to some observed data. We begin by loading the observed response `Bensayo`, and fitting to
+Now, we will apply the bootstrap procedure to some observed data. We begin by loading the observed response `Bensayo`, and fitting these to our model
 ``` matlab
 % Load observed values
 Bensayo=xlsread('PBM.xlsx','B2:B104');
@@ -151,7 +151,7 @@ Plot data and the fit:
 
 ![](plots/obs-data-fit.png)
 
-Notice that the single exponential model does not fit the observed data as well as the simulated data did. This can also be seen in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. When the data are well described by a model, we expect the residuals to be distributed randomly above and below zero.  
+Notice that the single exponential model does not fit the observed data as well as it fit the simulated data. This is also apparent in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. When the data are well described by a model, we expect the residuals to be distributed randomly above and below zero.  
 
 ![](plots/obs-residuals.png)
 
