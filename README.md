@@ -80,6 +80,12 @@ Bbootstrap = Bmodel + bootResiduals;
 % Fit bootstrap data  
 betaBoot = nlinfit(t, Bbootstrap, @Hidrolisis, betaGuess);
 betaBoot
+
+% Output
+% betaBoot =
+%
+%   56.3776    0.0073
+
 ```
 
 Notes on the code:
@@ -107,7 +113,7 @@ for i=1:nboot
 end
 ```
 
-This time, each column of `bootIndices` is an independent resampling of the vector `1:length(residuals)`. Therefore, each column of `Bbootstrap` is an independent bootstrap dataset. We fit each of these bootstrap datasets and collect the parameter estimates in the matrix `betaBoot`. These independent estimates make up the bootstrap distributions of the two parameters. The following plot shows these distributions, together with their 95% confidence intervals:
+This time, each column of `bootIndices` is an independent resampling of the vector `1:length(residuals)`. We then use these indices to generate  Therefore, each column of `Bbootstrap` is an independent bootstrap dataset. We fit each of these bootstrap datasets and collect the parameter estimates in the matrix `betaBoot`. These independent estimates make up the bootstrap distributions of the two parameters. The following plot shows these distributions, together with their 95% confidence intervals:
 ![](plots/sim-bootstrap-distr.png)
 
 The confidence intervals are estimated by:
@@ -119,8 +125,7 @@ bootCI = prctile(betaBoot, [2.5 97.5]);
 
 ## Part 2: Bootstrap application to observed data
 
-Now, we will repeat the bootstrap procedure with observed data. Start by loading the observed values, and fitting them to the model:
-
+Now, we will apply the bootstrap procedure to some observed data. We begin by loading the observed response `Bensayo`, and fitting to
 ``` matlab
 % Load observed values
 Bensayo=xlsread('PBM.xlsx','B2:B104');
@@ -130,15 +135,15 @@ betaGuess = [max(Bensayo), 0.1]
 betaHat
 ```
 
-As before, we plot the data and the fit:
+Plot data and the fit:
 
 ![](plots/obs-data-fit.png)
 
-Notice that with the real data, the fit to this single exponential model is not that great. This can also be seen in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. For a good fit, we expect the residuals to be distributed roughly evenly above a below zero. 
+Notice that the single exponential model does not fit the observed data as well as the simulated data did. This can also be seen in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. When the data are well described by a model, we expect the residuals to be distributed roughly evenly above a below zero. 
 
 ![](plots/obs-residuals.png)
 
-These observations suggest that the single exponential model might not be the best descriptor of these data. With this caveat in mind, we can still proceed with the bootstrap procedure:
+These observations suggest that the single exponential model might not be the best descriptor of these data. With this caveat, we now proceed with the bootstrap procedure as before:
 
 ``` matlab
 % Apply bootstrap procedure to observed data
@@ -161,7 +166,7 @@ The following plots show the bootstrap distributions and the 95% confidence inte
 
 ![](plots/obs-bootstrap-distr.png)
 
-We can also use the bootstrap distributions to generate a boostrap confidence interval for the model prediction (shown below in dashed gray lines):
+We can use the parameter confidence intervals to generate a prediction envelope for the model (shown below in dashed gray lines):
 
 ![](plots/bootstrap-prediction.png)
 
