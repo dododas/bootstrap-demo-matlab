@@ -77,7 +77,7 @@ legend('Simulated data','Fit to simulated data', 'Bootstrap data', 'Fit to boots
 %print('plots/sim-bootstrap-fit.png', '-dpng', '-r100')
 
 % Now, apply bootstrap procedure many times to build up the bootstrap distributions 
-nboot= 1000 %Número de replicas para el Bootstrap
+nboot= 1000; %Número de replicas para el Bootstrap
 [~, bootIndices] = bootstrp(nboot, [], residuals);
 bootResiduals = residuals(bootIndices);
 Bbootstrap =repmat(Bmodel, 1, nboot) + bootResiduals;
@@ -124,7 +124,7 @@ betaHat
 
 % Plot data and model
 clf()
-plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot simulated data
+plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot data
 hold on
 tplot = linspace(0, max(t), 200);
 Bplot = Hidrolisis(betaHat, tplot);
@@ -154,7 +154,7 @@ ylabel('frequency')
 %print('plots/obs-residuals.png', '-dpng', '-r100')
 
 % Apply bootstrap procedure to observed data
-nboot= 1000 %Número de replicas para el Bootstrap
+nboot= 1000; %Número de replicas para el Bootstrap
 [~, bootIndices] = bootstrp(nboot, [], residuals);
 bootResiduals = residuals(bootIndices);
 Bmodel = Hidrolisis(betaHat, t);
@@ -192,16 +192,14 @@ ylabel('Frequency')
 
 % Plot data, model and bootstrap prediction intervals
 clf()
-plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot simulated data
+plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot data
 hold on
 tplot = linspace(0, max(t), 200);
 Bplot = Hidrolisis(betaHat, tplot);
 plot(tplot, Bplot,'-','LineWidth', 2) % Add best fit curve
-% Bootstrap  lower bound
-Blo = Hidrolisis(bootCI(1,:), tplot);
+Blo = Hidrolisis(bootCI(1,:), tplot); % Bootstrap  lower bound
 plot(tplot, Blo, '--', 'LineWidth', 2, 'Color', [0.5 0.5 0.5])
-% Bootstrap upper bound
-Bhi = Hidrolisis(bootCI(2,:), tplot);
+Bhi = Hidrolisis(bootCI(2,:), tplot); % Bootstrap upper bound
 plot(tplot, Bhi, '--', 'LineWidth', 2, 'Color', [0.5 0.5 0.5])
 xlabel('t (horas)')
 ylabel('B (mLCH4/gSV)')

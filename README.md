@@ -150,7 +150,7 @@ Plot data and the fit:
 
 ![](plots/obs-data-fit.png)
 
-Notice that the single exponential model does not fit the observed data as well as the simulated data did. This can also be seen in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. When the data are well described by a model, we expect the residuals to be distributed roughly evenly above a below zero. 
+Notice that the single exponential model does not fit the observed data as well as the simulated data did. This can also be seen in the plots of the residuals below, as well as the distribution of residuals, which is very *non-normal*. When the data are well described by a model, we expect the residuals to be distributed randomly above and below zero.  
 
 ![](plots/obs-residuals.png)
 
@@ -158,7 +158,7 @@ These observations suggest that the single exponential model might not be the be
 
 ``` matlab
 % Apply bootstrap procedure to observed data
-nboot= 1000 %Número de replicas para el Bootstrap
+nboot= 1000; %Número de replicas para el Bootstrap
 [~, bootIndices] = bootstrp(nboot, [], residuals);
 bootResiduals = residuals(bootIndices);
 Bmodel = Hidrolisis(betaHat, t);
@@ -184,6 +184,25 @@ The following plots show the bootstrap distributions and the 95% confidence inte
 ![](plots/obs-bootstrap-distr.png)
 
 Finally, we use the parameter confidence intervals to generate a prediction envelope for the model (shown below in dashed gray lines) with the following code block:
+``` matlab
+clf()
+plot(t, Bensayo, 'o', 'MarkerSize', 6) % Plot data
+hold on
+tplot = linspace(0, max(t), 200);
+Bplot = Hidrolisis(betaHat, tplot);
+plot(tplot, Bplot,'-','LineWidth', 2) % Add best fit curve
+Blo = Hidrolisis(bootCI(1,:), tplot); % Bootstrap  lower bound
+plot(tplot, Blo, '--', 'LineWidth', 2, 'Color', [0.5 0.5 0.5])
+Bhi = Hidrolisis(bootCI(2,:), tplot); % Bootstrap upper bound
+plot(tplot, Bhi, '--', 'LineWidth', 2, 'Color', [0.5 0.5 0.5])
+xlabel('t (horas)')
+ylabel('B (mLCH4/gSV)')
+grid on
+hold off
+```
 
 ![](plots/bootstrap-prediction.png)
 
+---
+
+[Click here](bootstrap-demo.m) for the complete code in one place.
