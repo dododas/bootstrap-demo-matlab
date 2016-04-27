@@ -113,10 +113,11 @@ for i=1:nboot
 end
 ```
 
-This time, each column of `bootIndices` is an independent resampling of the vector `1:length(residuals)`. We then use these indices to generate  Therefore, each column of `Bbootstrap` is an independent bootstrap dataset. We fit each of these bootstrap datasets and collect the parameter estimates in the matrix `betaBoot`. These independent estimates make up the bootstrap distributions of the two parameters. The following plot shows these distributions, together with their 95% confidence intervals:
+This time, each column of `bootIndices` is an independent resampling of the vector `1:length(residuals)`. We then use these indices to resample the residuals. Each column of `bootResiduals` is one such bootstrap sample. As before, we add these residuals to the model prediction to generate bootstrap datasets. Thus, each column of `Bbootstrap` is a single bootstrap dataset. We fit each of these bootstrap datasets to our model and collect the parameter estimates in the matrix `betaBoot`. These estimates make up the bootstrap distributions of the two parameters plotted below. The vertical red lines show the 95% confidence interval for each parameter.
+
 ![](plots/sim-bootstrap-distr.png)
 
-The confidence intervals are estimated by:
+The confidence intervals are computed using percentiles:
 ``` matlab
 % Estimate bootstrap confidence intervals
 %Estimación del Intervalo de Confianza del 95%
@@ -179,7 +180,7 @@ bootCI = prctile(betaBoot, [2.5 97.5])
 %   58.5698    0.0090
 ```
 
-The following plots show the bootstrap distributions and the 95% confidence intervals for each parameter. 
+The following plots show the bootstrap distributions and 95% confidence intervals for each parameter. 
 
 ![](plots/obs-bootstrap-distr.png)
 
