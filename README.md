@@ -90,8 +90,8 @@ betaBoot
 
 Notes on the code:
 - The function call `[~, bootIndices] = bootstrp(1, [], residuals);` returns a list of indices obtained by resampling with replacement from the vector `1:length(residuals)`.  
-- To resample the residuals, we select the residuals at these indices using `bootResiduals = residuals(bootIndices);`. 
-- We then add the resampled residuals to the model prediction to generate the boostrap dataset.
+- To resample residuals, we select the residuals at these indices using `bootResiduals = residuals(bootIndices);`. 
+- We then add the resampled residuals to the model prediction to generate the boostrap dataset `Bbootstrap`.
 - Finally, we fit the bootstrap dataset using a call to `nlinfit()`. 
 
 The following plot shows the original data we first simulated, and the bootstrap data generated as above, together with the fits to each dataset. 
